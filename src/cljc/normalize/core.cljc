@@ -1,18 +1,19 @@
 (ns normalize.core
   (:require
+    [clojure.string :refer [replace lower-case]]
     #?(:cljs ["normalize-diacritics" :refer [normalize normalizeSync]])))
 
 (defn escape-special-characters [url]
-  (clojure.string/replace url #"[^a-zA-Z0-9\u00C0-\u017F\ ]" ""))
+  (replace url #"[^a-zA-Z0-9\u00C0-\u017F\ ]" ""))
 
-(defn deaccent [the-string]
+(defn deaccent [text]
   "Remove accent from string"
-  #?(:cljs (let [normalized (java.text.Normalizer/normalize the-string java.text.Normalizer$Form/NFD)]
+  #?(:cljs (let [normalized (java.text.Normalizer/normalize text java.text.Normalizer$Form/NFD)]
              (replace normalized #"\p{InCombiningDiacriticalMarks}+" ""))
-     :clj  (normalizeSync the-string)))
+     :clj  (normalizeSync text)))
 
-(defn space->separator [string]
-  (clojure.string/replace string #"[ |-]{1,}" "-"))
+(defn space->separator [text]
+  (replace text #"[ |-]{1,}" "-"))
 
 (defn cut-special-char [string]
   (replace string #"[^\w\s-]" ""))
@@ -24,4 +25,4 @@
     (cut-special-char)
     (escape-special-characters)
     (space->separator)
-    (clojure.string/lower-case)))
+    (lower-case)))
