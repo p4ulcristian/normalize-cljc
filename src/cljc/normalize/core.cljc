@@ -8,9 +8,9 @@
 
 (defn deaccent [text]
   "Remove accent from string"
-  #?(:cljs (let [normalized (java.text.Normalizer/normalize text java.text.Normalizer$Form/NFD)]
-             (replace normalized #"\p{InCombiningDiacriticalMarks}+" ""))
-     :clj  (normalizeSync text)))
+  #?(:clj (let [normalized (java.text.Normalizer/normalize text java.text.Normalizer$Form/NFD)]
+            (replace normalized #"\p{InCombiningDiacriticalMarks}+" ""))
+     :cljs  (normalizeSync text)))
 
 (defn space->separator [text]
   (replace text #"[ |-]{1,}" "-"))
