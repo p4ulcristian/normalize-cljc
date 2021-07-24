@@ -4,7 +4,7 @@
     #?(:cljs ["normalize-diacritics" :refer [normalize normalizeSync]])))
 
 (defn escape-special-characters [url]
-  (replace url #"[^a-zA-Z0-9\u00C0-\u017F\ ]" ""))
+  (replace url #"[^a-zA-Z0-9\u00C0-\u017F\{\-}]" ""))
 
 (defn deaccent [text]
   "Remove accent from string"
@@ -15,11 +15,11 @@
 (defn space->separator [text]
   (replace text #"[ |-]{1,}" "-"))
 
-(defn cut-special-char [string]
-  (replace string #"[^\w\s-]" ""))
+(defn cut-special-char [text]
+  (replace text #"[^\w\s-]" ""))
 
-(defn normalize-string [string]
-  (-> string
+(defn normalize-string [text]
+  (-> text
     (str)
     (deaccent)
     (cut-special-char)
