@@ -1,6 +1,6 @@
 (ns normalize.core
   (:require
-    ["normalize-diacritics" :refer [normalize normalizeSync]]))
+    #?(:cljs ["normalize-diacritics" :refer [normalize normalizeSync]])))
 
 (defn escape-special-characters [url]
   (clojure.string/replace url #"[^a-zA-Z0-9\u00C0-\u017F\ ]" ""))
