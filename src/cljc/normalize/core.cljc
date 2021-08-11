@@ -16,7 +16,7 @@
   (replace text #"[ |-]{1,}" "-"))
 
 (defn cut-special-char [text]
-  (replace text #"[^\w\s-]" ""))
+  (replace text #"[^\w\s]" ""))
 
 (defn normalize-string [text]
   (-> text
